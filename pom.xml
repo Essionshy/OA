@@ -147,9 +147,9 @@
 
 	<modules>
 		<module>oa-dao</module>
-		<module>oa-commons</module>
-		<module>oa-entities</module>
+		<module>oa-commons</module>	
 		<module>oa-service</module>
 		<module>oa-webapp</module>
+		<module>oa-entity</module>
 	</modules>
 </project>
