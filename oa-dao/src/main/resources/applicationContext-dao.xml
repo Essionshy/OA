@@ -29,7 +29,7 @@
 				  value="classpath:mybatis/mybatis.config.xml"/>
 	</bean>
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.tingyu.erp.mapper"/>
+		<property name="basePackage" value="com.yuhong.oa.mapper"/>
 	</bean>
 	<!-- 声明一个批量操作的SqlSession --> 
 	<!-- <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">

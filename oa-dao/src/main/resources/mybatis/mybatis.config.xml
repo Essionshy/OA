@@ -8,7 +8,7 @@
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
 	<typeAliases>
-		<package name="com.yuhong.oa.entities" />
+		<package name="com.yuhong.oa.entity" />		
 	</typeAliases>
 	<plugins>
 		<plugin interceptor="com.github.pagehelper.PageInterceptor">

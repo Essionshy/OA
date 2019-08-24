@@ -21,30 +21,35 @@ public class DataGridResult implements Serializable {
 	/**
 	 * 查询列表总记录数
 	 */
-	private int total;
+	private long total;
 	/**
 	 * 查询结果集
 	 */
-	
-	private List rows=new ArrayList();
+
+	private List rows = new ArrayList();
+
 	public ResultMessage getResultMessage() {
 		return resultMessage;
 	}
+
 	public void setResultMessage(ResultMessage resultMessage) {
 		this.resultMessage = resultMessage;
 	}
-	public int getTotal() {
+
+	public long getTotal() {
 		return total;
 	}
-	public void setTotal(int total) {
+
+	public void setTotal(long total) {
 		this.total = total;
 	}
+
 	public List getRows() {
 		return rows;
 	}
+
 	public void setRows(List rows) {
 		this.rows = rows;
 	}
-	
 
 }

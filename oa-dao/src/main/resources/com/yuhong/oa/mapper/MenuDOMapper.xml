@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuhong.oa.mapper.MenuDOMapper">
-  <resultMap id="BaseResultMap" type="com.yuhong.oa.entities.MenuDO">
+  <resultMap id="BaseResultMap" type="com.yuhong.oa.entity.MenuDO">
     <result column="id" jdbcType="BIGINT" property="id" />
     <result column="menu_id" jdbcType="VARCHAR" property="menuId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -74,7 +74,7 @@
   <sql id="Base_Column_List">
     id, menu_id, name, url, parent_id, state, remark, creater_id, gmt_create, gmt_modified
   </sql>
-  <select id="selectByExample" parameterType="com.yuhong.oa.entities.MenuDOExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yuhong.oa.entity.MenuDOExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -88,13 +88,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.yuhong.oa.entities.MenuDOExample">
+  <delete id="deleteByExample" parameterType="com.yuhong.oa.entity.MenuDOExample">
     delete from oa_sys_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.yuhong.oa.entities.MenuDO">
+  <insert id="insert" parameterType="com.yuhong.oa.entity.MenuDO">
     insert into oa_sys_menu (id, menu_id, name, 
       url, parent_id, state, 
       remark, creater_id, gmt_create, 
@@ -104,7 +104,7 @@
       #{remark,jdbcType=VARCHAR}, #{createrId,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
       #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yuhong.oa.entities.MenuDO">
+  <insert id="insertSelective" parameterType="com.yuhong.oa.entity.MenuDO">
     insert into oa_sys_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -171,7 +171,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yuhong.oa.entities.MenuDOExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.yuhong.oa.entity.MenuDOExample" resultType="java.lang.Long">
     select count(*) from oa_sys_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

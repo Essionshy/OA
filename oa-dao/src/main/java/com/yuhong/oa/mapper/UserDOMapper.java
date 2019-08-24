@@ -1,10 +1,9 @@
 package com.yuhong.oa.mapper;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
-
 import com.yuhong.oa.entity.UserDO;
 import com.yuhong.oa.entity.UserDOExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserDOMapper {
     long countByExample(UserDOExample example);

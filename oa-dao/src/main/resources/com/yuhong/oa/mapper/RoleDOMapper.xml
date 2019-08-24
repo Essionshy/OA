@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuhong.oa.mapper.RoleDOMapper">
-  <resultMap id="BaseResultMap" type="com.yuhong.oa.entities.RoleDO">
+  <resultMap id="BaseResultMap" type="com.yuhong.oa.entity.RoleDO">
     <result column="id" jdbcType="BIGINT" property="id" />
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -73,7 +73,7 @@
   <sql id="Base_Column_List">
     id, code, name, state, remark, creater_id, modifier_id, gmt_create, gmt_modified
   </sql>
-  <select id="selectByExample" parameterType="com.yuhong.oa.entities.RoleDOExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yuhong.oa.entity.RoleDOExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -87,13 +87,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.yuhong.oa.entities.RoleDOExample">
+  <delete id="deleteByExample" parameterType="com.yuhong.oa.entity.RoleDOExample">
     delete from oa_sys_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.yuhong.oa.entities.RoleDO">
+  <insert id="insert" parameterType="com.yuhong.oa.entity.RoleDO">
     insert into oa_sys_role (id, code, name, 
       state, remark, creater_id, 
       modifier_id, gmt_create, gmt_modified
@@ -103,7 +103,7 @@
       #{modifierId,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.yuhong.oa.entities.RoleDO">
+  <insert id="insertSelective" parameterType="com.yuhong.oa.entity.RoleDO">
     insert into oa_sys_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -164,7 +164,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yuhong.oa.entities.RoleDOExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.yuhong.oa.entity.RoleDOExample" resultType="java.lang.Long">
     select count(*) from oa_sys_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

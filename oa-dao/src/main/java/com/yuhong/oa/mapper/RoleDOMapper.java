@@ -1,10 +1,9 @@
 package com.yuhong.oa.mapper;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
-
 import com.yuhong.oa.entity.RoleDO;
 import com.yuhong.oa.entity.RoleDOExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface RoleDOMapper {
     long countByExample(RoleDOExample example);

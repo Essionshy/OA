@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuhong.oa.mapper.UserDOMapper">
-  <resultMap id="BaseResultMap" type="com.yuhong.oa.entities.UserDO">
+  <resultMap id="BaseResultMap" type="com.yuhong.oa.entity.UserDO">
     <result column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="state" jdbcType="TINYINT" property="state" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
@@ -71,9 +71,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, password, state, remark, creater_id, modifier_id, gmt_create, gmt_modified
+    id, user_name, password, state, remark, creater_id, modifier_id, gmt_create, gmt_modified
   </sql>
-  <select id="selectByExample" parameterType="com.yuhong.oa.entities.UserDOExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yuhong.oa.entity.UserDOExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -87,30 +87,30 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.yuhong.oa.entities.UserDOExample">
+  <delete id="deleteByExample" parameterType="com.yuhong.oa.entity.UserDOExample">
     delete from oa_sys_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.yuhong.oa.entities.UserDO">
-    insert into oa_sys_user (id, user_id, password, 
+  <insert id="insert" parameterType="com.yuhong.oa.entity.UserDO">
+    insert into oa_sys_user (id, user_name, password, 
       state, remark, creater_id, 
       modifier_id, gmt_create, gmt_modified
       )
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{state,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, #{createrId,jdbcType=VARCHAR}, 
       #{modifierId,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.yuhong.oa.entities.UserDO">
+  <insert id="insertSelective" parameterType="com.yuhong.oa.entity.UserDO">
     insert into oa_sys_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="userId != null">
-        user_id,
+      <if test="userName != null">
+        user_name,
       </if>
       <if test="password != null">
         password,
@@ -138,8 +138,8 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
@@ -164,7 +164,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yuhong.oa.entities.UserDOExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.yuhong.oa.entity.UserDOExample" resultType="java.lang.Long">
     select count(*) from oa_sys_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -176,8 +176,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=VARCHAR},
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
       </if>
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
@@ -208,7 +208,7 @@
   <update id="updateByExample" parameterType="map">
     update oa_sys_user
     set id = #{record.id,jdbcType=BIGINT},
-      user_id = #{record.userId,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=TINYINT},
       remark = #{record.remark,jdbcType=VARCHAR},

@@ -1,10 +1,9 @@
 package com.yuhong.oa.mapper;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
-
 import com.yuhong.oa.entity.MenuDO;
 import com.yuhong.oa.entity.MenuDOExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface MenuDOMapper {
     long countByExample(MenuDOExample example);

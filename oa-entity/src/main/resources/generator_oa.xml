@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 配置生成策略，targetRuntime:Mybatis3 会生成Example类，MyBatis3Simple则不会生成 -->
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+	<!-- 注释生成取消 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<!-- 配置数据库连接信息 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/oa_db?useSSL=false" userId="root"
+			password="xzy1218817610">
+		</jdbcConnection>
+		
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		<!-- 指定javabean实体类生成路径 -->
+		<javaModelGenerator targetPackage="com.tingyu.oa.entity"
+			targetProject=".\src\main\java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<!-- 指定slq映射文件生成位置 -->
+		<sqlMapGenerator targetPackage="mapper"
+			targetProject=".\src\main\resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<!-- 指定mapper接口生成位置 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.tingyu.oa.mapper" targetProject=".\src\main\java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		<!-- 指定每个表的生成策略 -->
+		<table tableName="oa_sys_user" domainObjectName="UserDO"></table>
+		<table tableName="oa_sys_role" domainObjectName="RoleDO"></table>
+		<table tableName="oa_sys_position" domainObjectName="PositionDO"></table>
+		<table tableName="oa_sys_menu" domainObjectName="MenuDO"></table>
+		<table tableName="oa_sys_login_log" domainObjectName="LoginLogDO"></table>
+		<table tableName="oa_sys_department" domainObjectName="DepartmentDO"></table>
+		<table tableName="oa_r_user_role" domainObjectName="RelationUserRoleDO"></table>
+		<table tableName="oa_r_role_menu" domainObjectName="RelationRoleMenuDO"></table>
+		<table tableName="oa_position_class" domainObjectName="PositionClassDO"></table>
+		<table tableName="oa_emp_linktype" domainObjectName="LinktypeDO"></table>
+		<table tableName="oa_emp_linkman" domainObjectName="LInkmanDO"></table>
+		<table tableName="oa_emp_job" domainObjectName="JobDO"></table>
+		<table tableName="oa_emp_idcard" domainObjectName="IdcardDO"></table>
+		<table tableName="oa_emp_education" domainObjectName="EducationDO"></table>
+		<table tableName="oa_emp_basic" domainObjectName="EmployeeDO"></table>		
+	</context>
+</generatorConfiguration>

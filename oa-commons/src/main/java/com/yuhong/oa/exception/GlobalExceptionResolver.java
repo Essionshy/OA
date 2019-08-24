@@ -6,6 +6,8 @@ import java.lang.reflect.Method;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -29,6 +31,7 @@ import com.yuhong.oa.util.ResultMessage;
 //@Component
 public class GlobalExceptionResolver implements HandlerExceptionResolver {
 	// 注入JSON转换器,将异常信息转换为json
+	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionResolver.class);
 
 	private HttpMessageConverter<ResultException> jsonMessageConverter;
 
@@ -45,8 +48,9 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
 		ResponseBody responseBody = AnnotationUtils.findAnnotation(method, ResponseBody.class);
 		if (responseBody != null) {
 			// 表示返回json类型数据
-			System.out.println("响应异常普通 ");
+			logger.info("返回JSON类型异常信息数据  ");
 			ResultException resultException = resolverException(ex);
+			logger.info("异常处理器解析后的异常信息对象 "+resultException.toString());
 			HttpOutputMessage outputMessage = new ServletServerHttpResponse(response);
 			try {
 				jsonMessageConverter.write(resultException, MediaType.APPLICATION_JSON, outputMessage);
@@ -54,16 +58,19 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
 				// 输出异常堆栈信息
 				e.printStackTrace();
 			}
-		}
-
-		// 否则表示请求返回的是一个jsp页面
-		// 异常信息解析方法
-		ResultException resultException = resolverException(ex);
-		// 将异常信息在异常页面显示
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("ExceptionInfo", resultException.getMessage());
-		modelAndView.setViewName("Error");
-		return modelAndView;
+			return new ModelAndView();
+		}else {
+			
+			// 否则表示请求返回的是一个jsp页面
+			// 异常信息解析方法
+			ResultException resultException = resolverException(ex);
+			logger.info("返回页面类型异常信息数据 "+resultException);
+			// 将异常信息在异常页面显示
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.addObject("ExceptionInfo", resultException.getMessage());
+			modelAndView.setViewName("base/Error");
+			return modelAndView;				
+		}		
 	}
 
 	/**
@@ -82,6 +89,7 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
 		} else {
 			resultMessage = new ResultMessage();
 			resultMessage.setType(ResultMessage.RESULT_TYPE_FAIL);
+			resultMessage.setMessage("未知错误");
 		}
 		return new ResultException(resultMessage);
 	}

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuhong.oa.mapper.LoginLogDOMapper">
-  <resultMap id="BaseResultMap" type="com.yuhong.oa.entities.LoginLogDO">
-    <result column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+  <resultMap id="BaseResultMap" type="com.yuhong.oa.entity.LoginLogDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
     <result column="logout_time" jdbcType="TIMESTAMP" property="logoutTime" />
-    <result column="computer" jdbcType="VARCHAR" property="computer" />
+    <result column="login_dev" jdbcType="VARCHAR" property="loginDev" />
     <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
@@ -69,9 +69,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, login_time, logout_time, computer, login_ip, gmt_create
+    id, user_name, login_time, logout_time, login_dev, login_ip, gmt_create
   </sql>
-  <select id="selectByExample" parameterType="com.yuhong.oa.entities.LoginLogDOExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yuhong.oa.entity.LoginLogDOExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -85,28 +85,38 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.yuhong.oa.entities.LoginLogDOExample">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from oa_sys_login_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from oa_sys_login_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yuhong.oa.entity.LoginLogDOExample">
     delete from oa_sys_login_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.yuhong.oa.entities.LoginLogDO">
-    insert into oa_sys_login_log (id, user_id, login_time, 
-      logout_time, computer, login_ip, 
+  <insert id="insert" parameterType="com.yuhong.oa.entity.LoginLogDO">
+    insert into oa_sys_login_log (id, user_name, login_time, 
+      logout_time, login_dev, login_ip, 
       gmt_create)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, 
-      #{logoutTime,jdbcType=TIMESTAMP}, #{computer,jdbcType=VARCHAR}, #{loginIp,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, 
+      #{logoutTime,jdbcType=TIMESTAMP}, #{loginDev,jdbcType=VARCHAR}, #{loginIp,jdbcType=VARCHAR}, 
       #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yuhong.oa.entities.LoginLogDO">
+  <insert id="insertSelective" parameterType="com.yuhong.oa.entity.LoginLogDO">
     insert into oa_sys_login_log
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="userId != null">
-        user_id,
+      <if test="userName != null">
+        user_name,
       </if>
       <if test="loginTime != null">
         login_time,
@@ -114,8 +124,8 @@
       <if test="logoutTime != null">
         logout_time,
       </if>
-      <if test="computer != null">
-        computer,
+      <if test="loginDev != null">
+        login_dev,
       </if>
       <if test="loginIp != null">
         login_ip,
@@ -128,8 +138,8 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
       </if>
       <if test="loginTime != null">
         #{loginTime,jdbcType=TIMESTAMP},
@@ -137,8 +147,8 @@
       <if test="logoutTime != null">
         #{logoutTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="computer != null">
-        #{computer,jdbcType=VARCHAR},
+      <if test="loginDev != null">
+        #{loginDev,jdbcType=VARCHAR},
       </if>
       <if test="loginIp != null">
         #{loginIp,jdbcType=VARCHAR},
@@ -148,7 +158,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yuhong.oa.entities.LoginLogDOExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.yuhong.oa.entity.LoginLogDOExample" resultType="java.lang.Long">
     select count(*) from oa_sys_login_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -160,8 +170,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=VARCHAR},
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
       </if>
       <if test="record.loginTime != null">
         login_time = #{record.loginTime,jdbcType=TIMESTAMP},
@@ -169,8 +179,8 @@
       <if test="record.logoutTime != null">
         logout_time = #{record.logoutTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.computer != null">
-        computer = #{record.computer,jdbcType=VARCHAR},
+      <if test="record.loginDev != null">
+        login_dev = #{record.loginDev,jdbcType=VARCHAR},
       </if>
       <if test="record.loginIp != null">
         login_ip = #{record.loginIp,jdbcType=VARCHAR},
@@ -186,209 +196,48 @@
   <update id="updateByExample" parameterType="map">
     update oa_sys_login_log
     set id = #{record.id,jdbcType=BIGINT},
-      user_id = #{record.userId,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
       login_time = #{record.loginTime,jdbcType=TIMESTAMP},
       logout_time = #{record.logoutTime,jdbcType=TIMESTAMP},
-      computer = #{record.computer,jdbcType=VARCHAR},
+      login_dev = #{record.loginDev,jdbcType=VARCHAR},
       login_ip = #{record.loginIp,jdbcType=VARCHAR},
       gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <resultMap id="BaseResultMap" type="com.yuhong.oa.entities.LoginLogDO">
-    <result column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
-    <result column="logout_time" jdbcType="TIMESTAMP" property="logoutTime" />
-    <result column="computer" jdbcType="VARCHAR" property="computer" />
-    <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
-    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, user_id, login_time, logout_time, computer, login_ip, gmt_create
-  </sql>
-  <select id="selectByExample" parameterType="com.yuhong.oa.entities.LoginLogDOExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from oa_sys_login_log
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <delete id="deleteByExample" parameterType="com.yuhong.oa.entities.LoginLogDOExample">
-    delete from oa_sys_login_log
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.yuhong.oa.entities.LoginLogDO">
-    insert into oa_sys_login_log (id, user_id, login_time, 
-      logout_time, computer, login_ip, 
-      gmt_create)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, 
-      #{logoutTime,jdbcType=TIMESTAMP}, #{computer,jdbcType=VARCHAR}, #{loginIp,jdbcType=VARCHAR}, 
-      #{gmtCreate,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.yuhong.oa.entities.LoginLogDO">
-    insert into oa_sys_login_log
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="loginTime != null">
-        login_time,
-      </if>
-      <if test="logoutTime != null">
-        logout_time,
-      </if>
-      <if test="computer != null">
-        computer,
-      </if>
-      <if test="loginIp != null">
-        login_ip,
-      </if>
-      <if test="gmtCreate != null">
-        gmt_create,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="loginTime != null">
-        #{loginTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="logoutTime != null">
-        #{logoutTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="computer != null">
-        #{computer,jdbcType=VARCHAR},
-      </if>
-      <if test="loginIp != null">
-        #{loginIp,jdbcType=VARCHAR},
-      </if>
-      <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.yuhong.oa.entities.LoginLogDOExample" resultType="java.lang.Long">
-    select count(*) from oa_sys_login_log
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuhong.oa.entity.LoginLogDO">
     update oa_sys_login_log
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=VARCHAR},
+      <if test="loginTime != null">
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.loginTime != null">
-        login_time = #{record.loginTime,jdbcType=TIMESTAMP},
+      <if test="logoutTime != null">
+        logout_time = #{logoutTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.logoutTime != null">
-        logout_time = #{record.logoutTime,jdbcType=TIMESTAMP},
+      <if test="loginDev != null">
+        login_dev = #{loginDev,jdbcType=VARCHAR},
       </if>
-      <if test="record.computer != null">
-        computer = #{record.computer,jdbcType=VARCHAR},
+      <if test="loginIp != null">
+        login_ip = #{loginIp,jdbcType=VARCHAR},
       </if>
-      <if test="record.loginIp != null">
-        login_ip = #{record.loginIp,jdbcType=VARCHAR},
-      </if>
-      <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
+    where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByPrimaryKey" parameterType="com.yuhong.oa.entity.LoginLogDO">
     update oa_sys_login_log
-    set id = #{record.id,jdbcType=BIGINT},
-      user_id = #{record.userId,jdbcType=VARCHAR},
-      login_time = #{record.loginTime,jdbcType=TIMESTAMP},
-      logout_time = #{record.logoutTime,jdbcType=TIMESTAMP},
-      computer = #{record.computer,jdbcType=VARCHAR},
-      login_ip = #{record.loginIp,jdbcType=VARCHAR},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
+    set user_name = #{userName,jdbcType=VARCHAR},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      logout_time = #{logoutTime,jdbcType=TIMESTAMP},
+      login_dev = #{loginDev,jdbcType=VARCHAR},
+      login_ip = #{loginIp,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
